@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model IQueryable<Library>
+
+
+<div class="container">
+    <h1 class="text-center">Here is a list of all the books</h1>
+    <br />
+    <div class="row">
+        @foreach (var x in Model)
+        {
+            //Displaying all the books in columns and rows of cards
+            <div class="col-sm-4">
+                <div class="card" style="background-color: lightgray">
+                    <div class="card-body">
+                        <h4>@x.BookId: @x.Title</h4>
+                        <p>By: @x.AuthorFirstName @x.AuthorMiddleName @x.AuthorLastName</p>
+                        <p>Published By: @x.Publisher</p>
+                        <p>ISBN: @x.Isbn</p>
+                        <p>Classification: @x.Classification</p>
+                        <p>Category: @x.Category</p>
+                        <p>Price: $@x.Price</p>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <br />
+        }
+    </div>
+</div>
