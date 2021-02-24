@@ -2,31 +2,61 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model IQueryable<Library>
+@model LibraryListViewModel
+
+<!--The new commands I used in this were
+    1. The alert class
+                                         
+    2. the alert-dismissible fade show for the alert
+                                         
+    3. the card header background color - bg-warning
+                                         
+    4. also took away some elements in the badge class to make it fit better   -->
+
+    <div class="container">
+        <div class="alert alert-warning">
+            <strong>Hey!</strong> We know you are going to love our books!
+        </div>
+        <div class="alert alert-warning alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Also!</strong> Buy from us cuz we're the best!
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1 class="text-center">Here is a list of all the books</h1>
+        <br />
+        <div class="row">
+            @foreach (var x in Model.Libraries)
+            {
+                //Displaying all the books in columns and rows of cards
+                <div class="col-sm-4">
+                    <div class="card" style="background-color: lightgray">
+                        <div class="card-header bg-warning">
+                            <span class="badge badge-warning" style="float:right"><p>Pages: @x.NumPages</p></span>
+                            <h4>@x.BookId: @x.Title</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <p>By: @x.AuthorFirstName @x.AuthorMiddleName @x.AuthorLastName</p>
+                            <p>Published By: @x.Publisher</p>
+                            <p>ISBN: @x.Isbn</p>
+                            <p>Classification: @x.Classification</p>
+                            <p>Category: @x.Category</p>
+                            <p>Price: $@x.Price</p>
 
 
-<div class="container">
-    <h1 class="text-center">Here is a list of all the books</h1>
-    <br />
-    <div class="row">
-        @foreach (var x in Model)
-        {
-            //Displaying all the books in columns and rows of cards
-            <div class="col-sm-4">
-                <div class="card" style="background-color: lightgray">
-                    <div class="card-body">
-                        <h4>@x.BookId: @x.Title</h4>
-                        <p>By: @x.AuthorFirstName @x.AuthorMiddleName @x.AuthorLastName</p>
-                        <p>Published By: @x.Publisher</p>
-                        <p>ISBN: @x.Isbn</p>
-                        <p>Classification: @x.Classification</p>
-                        <p>Category: @x.Category</p>
-                        <p>Price: $@x.Price</p>
+                        </div>
                     </div>
+                    <br />
                 </div>
                 <br />
-            </div>
-            <br />
-        }
+            }
+
+        </div>
+        <!--Display pagination-->
+        <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true" page-class="btn"
+             page-class-normal="btn-outline-dark"
+             page-class-selected="btn-primary"
+             class="btn-group pull-right m-1"></div>
     </div>
-</div>

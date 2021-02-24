@@ -32,5 +32,7 @@ namespace Assignment5_wellingJ.Models
         public string Category { get; set; }
         [Required]
         public double Price { get; set; }
+        [Required]
+        public int NumPages { get; set; }
     }
 }
