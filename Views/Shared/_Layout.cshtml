@@ -7,17 +7,39 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<header>
+
+<body>
     <!--This shows a banner with the site title-->
-    <div class="container bg-warning" >
+    <div class="container bg-warning">
         <div class="jumbotron bg-warning">
             <h1 class="text-center">Welcome to Amazon 2.0</h1>
             <h4 class="text-center">Created by Jacob Welling</h4>
         </div>
-</header>
-<body>
-    <!--This is where the body of Index will display-->
-    <div>@RenderBody()</div>
+    </div>
+    <!--Added Alerts-->
+    <div class="container">
+        <div class="alert alert-warning">
+            <strong>Hey!</strong> We know you are going to love our books!
+        </div>
+        <div class="alert alert-warning alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Also!</strong> Buy from us cuz we're the best!
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="row m-1 p-1">
+        <div class="col-2">
+            <br />
+            <br />
+            <!--this is where it will show the navigation menu-->
+            <vc:navigation-menu />
+        </div>
+        <div class="col-8">
+            <!--This is where the body of Index will display-->
+            @RenderBody()
+        </div>
+    </div>
 
 </body>
 </html>

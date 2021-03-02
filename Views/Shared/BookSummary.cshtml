@@ -1,0 +1,28 @@
+﻿
+
+<!--Importing model-->
+
+@model Library
+
+<!--Displaying all the books in columns and rows of cards-->
+<div class="col-sm-4">
+    <div class="card" style="background-color: lightgray">
+        <div class="card-header bg-warning">
+            <span class="badge badge-warning" style="float:right">Pages: @Model.NumPages</span>
+            <h4>@Model.BookId: @Model.Title</h4>
+        </div>
+        <div class="card-body">
+
+            <p>By: @Model.AuthorFirstName @Model.AuthorMiddleName @Model.AuthorLastName</p>
+            <p>Published By: @Model.Publisher</p>
+            <p>ISBN: @Model.Isbn</p>
+            <p>Classification: @Model.Classification</p>
+            <p>Category: @Model.Category</p>
+            <p>Price: $@Model.Price</p>
+
+
+        </div>
+    </div>
+    <br />
+</div>
+<br />

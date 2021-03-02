@@ -56,12 +56,27 @@ namespace Assignment5_wellingJ
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    "pagination",
-                    "P{page}",
+                //endpoint allows to type in a category type and then page number to get to certain page
+            endpoints.MapControllerRoute("categoryPage",
+                "{category}/{page:int}",
+                new { Controller = "Home", action = "Index" });
+                //endpoint allows to just type an int which will be a page
+            endpoints.MapControllerRoute("page",
+                "{page:int}",
                     new { Controller = "Home", action = "Index" });
-                endpoints.MapDefaultControllerRoute();
+                //endpoint allows to just type a category and page will automatically go to one
+            endpoints.MapControllerRoute("category",
+                "{category}",
+                new { Controller = "Home", action = "Index", page = 1 });
+                //allows for P and then page number to by typed in to get to certain page
+            endpoints.MapControllerRoute(
+                "pagination",
+                "P{page}",
+                new { Controller = "Home", action = "Index" });
+
+            endpoints.MapDefaultControllerRoute();
             });
+
             SeedData.EnsurePopulated(app);
         }
     }

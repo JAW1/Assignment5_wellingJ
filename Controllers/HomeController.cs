@@ -24,11 +24,12 @@ namespace Assignment5_wellingJ.Controllers
             _repository = repository;
         }
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string category, int page = 1)
         {
             return View(new LibraryListViewModel
             {
                 Libraries = _repository.Libraries
+                .Where(p => category == null || p.Category == category)
                 .OrderBy(p => p.BookId)
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize)
@@ -37,8 +38,11 @@ namespace Assignment5_wellingJ.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
-                    TotalNumItems = _repository.Libraries.Count()
-                }
+                    //creating ability to show page numbering dynamically depending on how many items are part of a category
+                    TotalNumItems = category == null ? _repository.Libraries.Count() :
+                    _repository.Libraries.Where (x => x.Category == category).Count()
+                },
+                CurrentCategory = category
 
             });
         }

@@ -202,7 +202,7 @@ namespace Assignment5_wellingJ.Models
                         Publisher = "Del Rey",
                         Isbn = "978-0345339737",
                         Classification = "Fiction",
-                        Category = "Classic Literature",
+                        Category = "Classic",
                         Price = 8.99,
                         NumPages = 512
                     }
