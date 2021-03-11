@@ -1,6 +1,7 @@
 using Assignment5_wellingJ.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,9 +30,16 @@ namespace Assignment5_wellingJ
             //adding new services
             services.AddDbContext<Amazon2DBContext>(options =>
            {
-               options.UseSqlServer(Configuration["ConnectionStrings:Amazon2Connection"]);
+               options.UseSqlite(Configuration["ConnectionStrings:Amazon2Connection"]);
            });
             services.AddScoped<iLibraryRepository, EFLibraryRepository>();
+
+            services.AddRazorPages();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +58,8 @@ namespace Assignment5_wellingJ
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -58,23 +68,25 @@ namespace Assignment5_wellingJ
             {
                 //endpoint allows to type in a category type and then page number to get to certain page
             endpoints.MapControllerRoute("categoryPage",
-                "{category}/{page:int}",
+                "{category}/{pageNum:int}",
                 new { Controller = "Home", action = "Index" });
                 //endpoint allows to just type an int which will be a page
             endpoints.MapControllerRoute("page",
-                "{page:int}",
+                "{pageNum:int}",
                     new { Controller = "Home", action = "Index" });
                 //endpoint allows to just type a category and page will automatically go to one
             endpoints.MapControllerRoute("category",
                 "{category}",
-                new { Controller = "Home", action = "Index", page = 1 });
+                new { Controller = "Home", action = "Index", pageNum = 1 });
                 //allows for P and then page number to by typed in to get to certain page
             endpoints.MapControllerRoute(
                 "pagination",
-                "P{page}",
+                "P{pageNum}",
                 new { Controller = "Home", action = "Index" });
 
             endpoints.MapDefaultControllerRoute();
+
+            endpoints.MapRazorPages();
             });
 
             SeedData.EnsurePopulated(app);
